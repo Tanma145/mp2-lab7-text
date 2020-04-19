@@ -2,9 +2,6 @@
 #include <fstream>
 #include <string>
 #include "TStack.h"
-#define TextLineLength 80
-#define MemSize 20
-typedef char TStr[TextLineLength];
 using namespace std;
 class TText;
 class TTextLink;
@@ -21,7 +18,7 @@ protected:
 	TTextLink* pNext, * pDown;
 	static TTextMem MemHeader;
 public:
-	char str[81];
+	char str[151];
 	TTextLink(const char _str[]) {
 		strcpy_s(str, _str);
 		pNext = NULL;
@@ -29,7 +26,7 @@ public:
 	}
 	~TTextLink(){}
 
-	static void InitMemSystem(int size = MemSize);
+	static void InitMemSystem(int size = 100);
 	static void PrintFreeLink();
 	void* operator new(size_t size);
 	void operator delete (void* pM);
@@ -66,8 +63,8 @@ public:
 	TTextLink* ReadRec(ifstream& ifs);
 	void Write(string fn);
 	void WriteRec(ofstream& ofs, TTextLink* p);
-	friend ostream& operator<<(ostream& os, TText t) {
-		t.PrintRec(os, t.pFirst, "");
+	friend ostream& operator<<(ostream& os, TText txt) {
+		txt.PrintRec(os, txt.pFirst, "");
 		return os;
 	}
 	void PrintRec(ostream& os, TTextLink* p, string spacing);

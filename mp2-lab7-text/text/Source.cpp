@@ -20,11 +20,12 @@ void printMenu() {
 	cout << "12 - Add a section to down level" << endl;
 	cout << "13 - Delete line from this level" << endl;
 	cout << "14 - Delete line from down level" << endl;
-	cout << "15 - Exit" << endl << endl;
+	cout << "15 - Clean memory" << endl;
+	cout << "16 - Exit" << endl << endl;
 }
 
 int main() {
-	TTextLink::InitMemSystem(100);
+	TTextLink::InitMemSystem(500);
 	try {
 		int choice;
 		string new_line;
@@ -96,14 +97,18 @@ int main() {
 				text.DelDown();
 				break;
 			case 15: 
+				TTextLink::MemCleaner(text);
+				break;
+			case 16:
 				cout << "End of session" << endl;
 				break;
 			}
 			system("cls");
 			printMenu();
-			cout << text;
+			cout << text << endl;
+			TTextLink::PrintFreeLink();
 
-		} while (choice != 15);
+		} while (choice != 16);
 		
 	}
 	catch (int a) {

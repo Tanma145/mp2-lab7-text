@@ -17,8 +17,11 @@ void TTextLink::InitMemSystem(int size) {
 }
 void TTextLink::PrintFreeLink() {
 	cout << "List of free links:" << endl;
-	for (TTextLink* pLink = MemHeader.pFree; pLink != NULL; pLink = pLink->pNext)
-		cout << pLink->str;
+	for (TTextLink* pLink = MemHeader.pFree; pLink->pNext != NULL; pLink = pLink->pNext) {
+		if (pLink->str[0] != '\0') {
+			cout << pLink->str << endl;
+		}
+	}
 }
 void* TTextLink::operator new(size_t size) {
 	TTextLink* pLink = MemHeader.pFree;
@@ -31,8 +34,8 @@ void TTextLink::operator delete(void *pM) {
 	MemHeader.pFree = pLink;
 }
 void TTextLink::MemCleaner(TText& txt) {
+	string tmp = "&&&";
 	for (txt.Reset(); !txt.IsEnd(); txt.GoNext()) {
-		string tmp = "&&&";
 		tmp += txt.GetLine();
 		txt.SetLine(tmp);
 	}
