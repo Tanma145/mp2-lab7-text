@@ -25,7 +25,8 @@ void TTextLink::PrintFreeLink() {
 }
 void* TTextLink::operator new(size_t size) {
 	TTextLink* pLink = MemHeader.pFree;
-	if (MemHeader.pFree != NULL) MemHeader.pFree = pLink->pNext;
+	if (MemHeader.pFree != NULL) 
+		MemHeader.pFree = pLink->pNext;
 	return pLink;
 }
 void TTextLink::operator delete(void *pM) {
@@ -34,14 +35,16 @@ void TTextLink::operator delete(void *pM) {
 	MemHeader.pFree = pLink;
 }
 void TTextLink::MemCleaner(TText& txt) {
-	string tmp = "&&&";
 	for (txt.Reset(); !txt.IsEnd(); txt.GoNext()) {
+		string tmp = "&&&";
 		tmp += txt.GetLine();
 		txt.SetLine(tmp);
 	}
 	TTextLink* pLink;
 	for (pLink = MemHeader.pFree; pLink != NULL; pLink = pLink->pNext) {
-		strcpy(pLink->str, "&&&");
+		string tmp = "&&&";
+		tmp += pLink->str;
+		strcpy(pLink->str, tmp.c_str());
 	}
 	for (pLink = MemHeader.pFirst; pLink <= MemHeader.pLast; pLink++) {
 		if (strstr(pLink->str, "&&&") != NULL)
